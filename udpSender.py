@@ -16,7 +16,7 @@ while 1:
         
     for i in range (1, n + 1):
         data1 = data + "(" + str(i) + ")"
-        print ("data sent: " + data)
+        print ("data sent: " + data1)
         if not len(data):
             break
 #        s.sendall(data.encode('utf-8'))
