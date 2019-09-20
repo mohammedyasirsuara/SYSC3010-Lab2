@@ -16,6 +16,6 @@ while True:
     buf, address = s.recvfrom(port)
     if not len(buf):
         break
-    print ("Received %s bytes from %s %s: ACK: " % (len(buf), address, buf ))
+    print ("Received %s bytes from %s %s: ACK: %s" % (len(buf), address, buf, buf ))
 
 s.shutdown(1)
