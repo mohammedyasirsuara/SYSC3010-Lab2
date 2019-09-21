@@ -1,4 +1,5 @@
 
+
 import java.net.*;
 
 public class UDPReceiver {
@@ -7,6 +8,7 @@ public class UDPReceiver {
 
 	public static void main( String args[] )
 	{ 
+		  DatagramSocket ackSocket = null ;
 	      // Check the arguments
 	      if( args.length != 1 )
 	      {
@@ -20,6 +22,8 @@ public class UDPReceiver {
 
 	         // Construct the socket
 	         DatagramSocket socket = new DatagramSocket( port ) ;
+	         
+	         
 
 	         for( ;; )
 	         {
@@ -28,6 +32,19 @@ public class UDPReceiver {
 	            socket.receive( packet ) ;
 
 	            System.out.println( packet.getAddress() + " " + packet.getPort() + ": " + new String(packet.getData()).trim() ) ;
+       		 	
+	            // Construct ACK socket
+		        InetAddress ackHost = packet.getAddress() ;
+		        int ackPort         = port + 1;
+		        ackSocket = new DatagramSocket() ;
+		        String ack = null;
+		        
+		        ack = "ACK: " + new String(packet.getData()).trim();
+   			 	byte [] data = ack.getBytes() ;
+   			 	DatagramPacket ackPacket = new DatagramPacket( data, data.length, ackHost, ackPort ) ;
+   			 	System.out.println( ackPacket.getAddress() + " " + ackPacket.getPort() + ": " + new String(ackPacket.getData()).trim() ) ;
+   			 	
+   			 	ackSocket.send( ackPacket ) ;
 	        }  
 	     }
 	     catch( Exception e )
